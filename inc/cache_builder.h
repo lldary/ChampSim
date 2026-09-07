@@ -313,7 +313,18 @@ auto champsim::cache_builder<P, R>::get_total_latency() const -> uint64_t
   if (m_latency.has_value()) {
     latency = m_latency.value();
   } else {
-    latency = std::llround(std::pow(get_num_sets() * get_num_ways(), 0.343) * 0.416);
+    double sets = static_cast<double>(get_num_sets());
+    double ways = static_cast<double>(get_num_ways());
+    
+    // 基础容量因子（影响阵列线长与译码延迟）
+    double capacity = sets * ways;
+    double base_lat = std::pow(capacity, 0.343) * 0.416;
+    
+    // 组相联度惩罚因子：高相联度（ways 增大）需要更复杂的并行 Tag 比较和多路选择器（Mux）
+    // 这会拉长硬件关键路径，引入额外的时钟周期开销
+    double assoc_penalty = 1.0 + 0.04 * std::log2(std::max(ways, 1.0));
+    
+    latency = std::llround(base_lat * assoc_penalty);
   }
   return std::max(latency, uint64_t{2});
 }

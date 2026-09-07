@@ -1,0 +1,24 @@
+{
+  "executable_name": "cache-normal-plus",
+  "L1I": {
+    "sets": 64,
+    "ways": 16,
+    "mshr_size": 16,
+    "prefetcher": "no",
+    "replacement": "lru"
+  },
+  "L1D": {
+    "sets": 128,
+    "ways": 18,
+    "mshr_size": 16,
+    "prefetcher": "no",
+    "replacement": "lru"
+  },
+  "L2C": {
+    "sets": 2048,
+    "ways": 15,
+    "mshr_size": 20,
+    "prefetcher": "no",
+    "replacement": "lru"
+  }
+}
