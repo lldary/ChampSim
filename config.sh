@@ -82,8 +82,6 @@ if __name__ == '__main__':
     elif args.join == 'chain':
         config_files = ((c,) for c in itertools.chain(*files))
 
-    parsed_test = config.parse.parse_config({'executable_name': '000-test-main'}, module_dir=[os.path.join(test_root, 'cpp', 'modules')], compile_all_modules=True)
-
     parse_args = {
         'module_dir': args.module_dir,
         'branch_dir': args.branch_dir,
