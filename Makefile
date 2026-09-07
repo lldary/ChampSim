@@ -321,12 +321,12 @@ $(module_compile_commands_files): $(call rwildcard,$(call parent_dir,$@),*.cc)
 
 compile_commands: $(src_compile_commands_file) $(inc_compile_commands_file) $(test_compile_commands_file) $(module_compile_commands_files)
 
-# Tests: build and run
+# Tests: disabled
 ifdef TEST_NUM
 selected_test = -\# "[$(addprefix \#,$(filter $(addsuffix %,$(TEST_NUM)), $(patsubst %.cc,%,$(notdir $(wildcard $(test_source_dir)/*.cc)))))]"
 endif
-test: $(test_main_name)
-	$(test_main_name) $(selected_test)
+test:
+	$(error C++ test build is disabled)
 
 pytest:
 	PYTHONPATH=$(PYTHONPATH):$(ROOT_DIR) python3 -m unittest discover -v --start-directory='test/python'
